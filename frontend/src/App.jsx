@@ -17,7 +17,7 @@ function App() {
   const socket = useRef();
 
   function connect() {
-    socket.current = new WebSocket("ws://localhost:5001");
+    socket.current = new WebSocket("ws://localhost:5003");
 
     socket.current.onopen = () => {
       setConnected(true);
