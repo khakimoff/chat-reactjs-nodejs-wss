@@ -6,7 +6,7 @@
 # Run project(backend)
 cd backend
 yarn install
-node websocket
+npm start
 
 # Run project(frontend)
 cd frontend
