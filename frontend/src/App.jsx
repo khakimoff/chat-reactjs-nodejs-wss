@@ -1,34 +1,94 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import { useState, useRef } from "react";
+import AutorizationForm from "./AutorizationForm";
+import Chat from "./Chat";
 import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [disabledAuthBut, setDisabledAuthBut] = useState(true);
+  const [hiddenEmoji, setHiddenEmoji] = useState(true);
+  const [chosenEmoji, setChosenEmoji] = useState(null);
+  const [myName, setMyName] = useState("");
+  const [userName, setUsername] = useState("");
+  const [messages, setMessages] = useState([]);
+  const [value, setValue] = useState("");
+  const [connected, setConnected] = useState(false);
+  const [disabledBut, setDisabledBut] = useState(true);
+
+  const socket = useRef();
+
+  function connect() {
+    socket.current = new WebSocket("ws://localhost:5001");
+
+    socket.current.onopen = () => {
+      setConnected(true);
+      const message = {
+        event: "connection",
+        userName,
+        id: Date.now(),
+      };
+      socket.current.send(JSON.stringify(message));
+    };
+
+    socket.current.onmessage = (event) => {
+      const message = JSON.parse(event.data);
+      [].concat(message).reverse();
+
+      setMessages((prev) => [message, ...prev]);
+    };
+
+    socket.current.onclose = () => {
+      console.log("Socket закрыт");
+    };
+
+    socket.current.onerror = () => {
+      console.log("Socket произошла ошибка");
+    };
+  }
+
+  const sendMessage = async () => {
+    const message = {
+      userName,
+      message: value,
+      id: Date.now(),
+      event: "message",
+    };
+
+    socket.current.send(JSON.stringify(message));
+    setValue("");
+    setDisabledBut(true);
+    setHiddenEmoji(true);
+  };
+
+  if (!connected) {
+    return (
+      <AutorizationForm
+        value={userName}
+        setUsername={setUsername}
+        setMyName={setMyName}
+        disabled={disabledAuthBut}
+        setDisabled={setDisabledAuthBut}
+        onClick={connect}
+      />
+    );
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div className="App">
+      <Chat
+        value={value}
+        setValue={setValue}
+        messages={messages}
+        sendMessage={sendMessage}
+        hidden={hiddenEmoji}
+        setHidden={setHiddenEmoji}
+        chosenEmoji={chosenEmoji}
+        setChosenEmoji={setChosenEmoji}
+        myName={myName}
+        userName={userName}
+        disabled={disabledBut}
+        setDisabled={setDisabledBut}
+      />
+    </div>
   );
 }
 
