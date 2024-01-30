@@ -21,4 +21,4 @@ npm run dev
 
 #### Chat page
 
-<img width="1212" alt="Снимок экрана 2022-04-26 в 18 45 08" src="https://user-images.githubusercontent.com/34871899/165327592-c7dc74de-11d5-4a23-a286-acac2c9d2315.png">
+<img width="1602" alt="Снимок экрана 2024-01-30 в 16 14 50" src="https://github.com/khakimoff/chat-reactjs-nodejs-wss/assets/34871899/de29a1ab-6057-4b37-96b2-88836660ea4e">
