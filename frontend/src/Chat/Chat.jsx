@@ -115,7 +115,7 @@ function Chat({
         inline: "nearest",
       });
     }
-  });
+  }, []);
 
   function onChangeTextFiel(e) {
     const value = e.target.value;
