@@ -11,7 +11,7 @@ node websocket
 # Run project(frontend)
 cd frontend
 yarn install
-npm start
+npm run dev
 ```
 
 ### Screenshot
