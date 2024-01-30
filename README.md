@@ -17,8 +17,7 @@ npm run dev
 ### Screenshot
 
 #### Authorization page
-
-<img width="1211" alt="Снимок экрана 2022-04-26 в 18 51 26" src="https://user-images.githubusercontent.com/34871899/165328469-1f0ea4d7-d492-492a-beca-442e79e5dde9.png"><br />
+<img width="1475" alt="Снимок экрана 2024-01-30 в 15 29 56" src="https://github.com/khakimoff/chat-reactjs-nodejs-wss/assets/34871899/a98dccb6-c960-4fc0-989a-09f3ab3e650b"> <br />
 
 #### Chat page
 
